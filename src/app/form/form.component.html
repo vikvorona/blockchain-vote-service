@@ -1,0 +1,11 @@
+<form>
+  <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Enter name" name="myForm" [(ngModel)]="voice">
+      <div class="input-group-append">
+          <button class="btn btn-primary" (click)="countVoices()" >Submit</button>
+      </div>
+    </div>
+</form>
+<p>First voices: {{first}}</p>
+<p>Second voices: {{second}}</p>
+<p>Third voices: {{third}}</p>
