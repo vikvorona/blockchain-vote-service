@@ -1,0 +1,30 @@
+<div class="row">
+	<span class="col-10">
+		<h1 class="text-center mt-4 mb-4">Blockchain Vote Service</h1>
+	</span>
+	<span class="col-2">
+		<button class="btn btn-primary" (click)="logout()" >Logout</button>
+	</span>
+</div>
+<form>
+	<div class="input-group mb-3">
+		<input type="text" class="form-control" placeholder="Enter voting subject" name="myForm" [(ngModel)]="subject">
+		<div class="input-group-append">
+			<button class="btn btn-primary" (click)="addSubject()" >Add Subject</button>
+		</div>
+	</div>
+</form>
+<form>
+	<div class="input-group mb-3">
+		<input type="text" class="form-control" placeholder="Enter name" name="myForm" [(ngModel)]="vote">
+		<div class="input-group-append">
+			<button class="btn btn-primary" (click)="addVote()" >Vote</button>
+		</div>
+	</div>
+</form>
+<ul>
+	<li *ngFor="let vote of votes; let i = index">
+		<span>{{vote}}: {{voteCounts[i]}}</span>
+	</li>
+</ul>
+
