@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container">
+    <a href="#" class="navbar-brand logo">
+      
+    </a>
+    <button class="navbar-toggler" (click)="toggleNavbar()"  type="button" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div [ngbCollapse]="isNavbarCollapsed" id="navbar" class="navbar-collapse collapse navbar-toggleable">
+      <ul class="navbar-nav mr-auto"> 
+        <li class="nav-item">
+          <a class="nav-link" href="#"> <i class="fa fa-bar-chart" aria-hidden="true"></i> Голосования</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> О платформе </a>
+        </li>
+      </ul>
+      <div class="navbar__login">
+          <div ngbDropdown placement="bottom-right" class="d-inline-block">
+              <button class="btn btn-link user-toggle" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-user"></i> Admin</button>
+              <div ngbDropdownMenu>
+                <button class="dropdown-item"><i class="fa fa-gear"></i> Account</button>
+                <button class="dropdown-item"><i class="fa fa-sign-out"></i> Logout</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</nav>

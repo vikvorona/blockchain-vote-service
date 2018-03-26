@@ -1,0 +1,55 @@
+.logo{
+    display: block;
+    background: url('/assets/bvs-logo.png') no-repeat center center transparent;
+    width: 144px;
+    height: 60px;
+    &__text{
+        font-size: 2rem;
+        &-letter{
+            font-weight: 300;
+            &--b{
+                color: rgb(67, 221, 226);
+            }
+            &--v{
+                color: rgb(67, 221, 226);
+            }
+            &--s{
+              color: rgb(67, 221, 226);  
+            }
+        }
+    }
+}
+
+.navbar{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar__login{
+    color: #fff;
+}
+
+.navbar-toggler{
+    font-size: 1.5rem;
+    &:hover{
+        color: rgba(255, 255, 255, 0.75);
+    }
+    &:focus{
+        outline: none;
+    }
+}
+
+.navbar-dark .navbar-toggler{
+    border-color: transparent;
+}
+
+.user-toggle{
+    color: rgba(255, 255, 255, 0.5);
+    &:hover, &:focus{
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+    }
+    &:after{
+        display: none;
+    }
+}

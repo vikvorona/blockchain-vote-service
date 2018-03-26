@@ -5,7 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
-import { FormComponent } from './form/form.component';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app.routing';
 import { LoginComponent } from './login/login.component';
@@ -13,12 +12,19 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { FormModule } from './form/form.module';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		LoginComponent
+		LoginComponent,
+		LoginComponent,
+		FooterComponent,
+		HeaderComponent,
+		NavbarComponent
 	],
 	imports: [
 		BrowserModule,
