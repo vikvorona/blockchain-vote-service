@@ -1,0 +1,20 @@
+<mat-card>
+	<mat-card-title>
+		{{voting.name}}
+	</mat-card-title>
+	<mat-card-subtitle>
+		{{ VOTING_STATUS[voting.status] }}
+	</mat-card-subtitle>
+	<mat-card-content>
+		{{ voting.description }}
+		<mat-nav-list disableRipple="true">
+			<mat-list-item *ngFor="let answer of voting.answers">
+				{{ answer }}
+				<button *ngIf="!isFinished" mat-raised-button color="accent">
+					<mat-icon>done</mat-icon>
+					Голосовать
+				</button>
+			</mat-list-item>
+		</mat-nav-list>
+	</mat-card-content>
+</mat-card>

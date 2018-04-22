@@ -11,13 +11,11 @@ import { AdminGuard } from '../_guards/admin.guard';
 import { UserService } from '../_services/user.service';
 import { FormRoutingModule } from './form-routing.module';
 import { AuthenticationService } from '../_services/authentication.service';
-import { ModalComponent } from '../modal/modal.component';
 
 
 @NgModule({
 	declarations: [
-		FormComponent,
-		ModalComponent
+		FormComponent
 	],
 	imports: [
 		BrowserModule,

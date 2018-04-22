@@ -1,37 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { AuthenticationService } from '../_services/authentication.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
 	templateUrl: 'login.component.html',
-	styleUrls: ['../app.component.scss', './login.component.scss']
+	styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent implements OnInit {
-	model: any = {};
-	loading = false;
-	error = '';
+
+	loginForm: FormGroup;
+	hasErrors: boolean;
+	loading: boolean;
 
 	constructor(
 		private router: Router,
-		private authenticationService: AuthenticationService) { }
+		private authenticationService: AuthenticationService,
+		private fb: FormBuilder
+	) {
+		this.hasErrors = false;
+		this.loading = false;
+		this.loginForm = this.fb.group({
+			'username': ['', Validators.required],
+			'password': ['', Validators.required]
+		});
+	}
 
 	ngOnInit() {
 		// reset login status
 		this.authenticationService.logout();
 	}
 
-	login() {
-		this.loading = true;
-		this.authenticationService.login(this.model.username, this.model.password)
+
+	submitForm() {
+		this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
 			.subscribe(result => {
-				if (result === true) {
-					this.router.navigate(['/']);
-				} else {
-					this.error = 'Username or password is incorrect';
-					this.loading = false;
-				}
-			});
+				result === true ? setTimeout( () => this.router.navigate(['/voting']), 2000) : this.hasErrors = true;
+				this.loading = true;
+			}
+		);
 	}
 }

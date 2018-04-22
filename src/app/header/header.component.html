@@ -1,3 +1,54 @@
-<header>
-  <app-navbar></app-navbar>
-</header>
+<mat-toolbar color="primary"
+             fxLayout="row">
+	
+	<div fxFlex>
+		<a class="link link--logo" routerLink="/">Bravos</a>
+	</div>
+	
+
+	<div fxFlex fxLayoutAlign="center center">
+		<a mat-button
+			 routerLink="/voting">
+			<mat-icon>equalizer</mat-icon> Голосования
+		</a>
+		<a mat-button
+			 routerLink="/about">
+			 <mat-icon>info</mat-icon> О платформе
+		</a>
+	</div>
+	
+	<mat-menu #subMenu
+						xPosition="before">
+						
+		<button mat-menu-item>
+			<mat-icon>dialpad</mat-icon>
+			<span>Redial</span>
+		</button>
+
+		<button mat-menu-item disabled>
+			<mat-icon>voicemail</mat-icon>
+			<span>Check voicemail</span>
+		</button>
+
+		<button mat-menu-item>
+			<mat-icon>notifications_off</mat-icon>
+			<span>Disable alerts</span>
+		</button>
+
+	</mat-menu>
+	
+	<div fxFlex
+			 fxLayoutAlign="end">
+		<button mat-icon-button>
+ 			<mat-icon>notifications</mat-icon>
+		</button>
+		<button mat-icon-button
+						[matMenuTriggerFor]="subMenu">
+			<mat-icon>more_vert</mat-icon>
+		</button>
+	</div>
+
+</mat-toolbar>
+<!--<header>
+	<app-navbar></app-navbar>
+</header>-->
