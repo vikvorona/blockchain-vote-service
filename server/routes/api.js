@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.load();
 const uri = process.env.URI;
 const User = require("./user");
+const Poll = require("./poll");
 const jwtsecret = "mysecretkey"; // ключ для подписи JWT
 const jwt = require('jsonwebtoken'); // аутентификация по JWT для hhtp
 const passport = require('./passport');
@@ -99,6 +100,41 @@ mongoose.connect(uri, function(err) {
 				}, (err) => {
 					response.status(500).send({ error: "Пользователь с таким именем существует"});
 				});
+			} else {
+				response.status(500).send({ error: "You don't have permissions for this action" });
+			}
+		})(request, response)
+	});
+
+	// Get Polls list
+	router.get("/polls", (request, response) => {
+		Poll.find({status: "active"}, (err, poll) => {
+			if (err) throw err;
+
+			response.send(poll);
+		});
+	});
+
+	// Create Poll
+	router.put("/createPoll", async(request, response) => {
+		await passport.authenticate('jwt', (err, user) => {
+			if (user && user.permissions === "admin") {
+				if (!request.body.name || !request.body.address) {
+					response.status(500).send({ error: "Name and address of poll are required." });
+				}
+				var newPoll = new Poll({
+					_id: new mongoose.Types.ObjectId(),
+					name: request.body.name,
+					address: request.body.adddress,
+					status: "active",
+					startDate: new Date()
+				})
+				newPoll.save(function(err) {
+					if (err) throw err;
+
+					console.log('New poll ', request.body.name, ' saved.');
+					response.send();
+				})
 			} else {
 				response.status(500).send({ error: "You don't have permissions for this action" });
 			}
