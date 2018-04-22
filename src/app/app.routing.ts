@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { VotingComponent } from './voting/voting.component';
 import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -21,11 +22,14 @@ export const appRoutes: Routes = [
 		component: AboutComponent,
 		canActivate: [AuthGuard]
 	},
-
-	// otherwise redirect to home
+	{
+		path: '',
+		component: HomeComponent,
+		canActivate: [AuthGuard]
+	},
 	{
 		path: '**',
-		redirectTo: '/voting'
+		redirectTo: '/'
 	}
 ];
 

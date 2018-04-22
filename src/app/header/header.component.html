@@ -19,27 +19,26 @@
 	
 	<mat-menu #subMenu
 						xPosition="before">
-						
-		<button mat-menu-item>
-			<mat-icon>dialpad</mat-icon>
-			<span>Redial</span>
+		
+		<button *ngIf="isNotificationsDisabled" mat-menu-item (click)="toggleNotifications()">
+			<mat-icon>notifications</mat-icon>
+				<span>Вкл. уведомления</span>
 		</button>
-
-		<button mat-menu-item disabled>
-			<mat-icon>voicemail</mat-icon>
-			<span>Check voicemail</span>
-		</button>
-
-		<button mat-menu-item>
+		<button *ngIf="!isNotificationsDisabled" mat-menu-item (click)="toggleNotifications()">
 			<mat-icon>notifications_off</mat-icon>
-			<span>Disable alerts</span>
+			<span>Выкл. уведомления</span>
 		</button>
+
+		<button mat-menu-item (click)="logout()">
+				<mat-icon>power_settings_new</mat-icon>
+				<span>Выйти</span>
+			</button>
 
 	</mat-menu>
 	
 	<div fxFlex
 			 fxLayoutAlign="end">
-		<button mat-icon-button>
+		<button *ngIf="!isNotificationsDisabled" mat-icon-button>
  			<mat-icon>notifications</mat-icon>
 		</button>
 		<button mat-icon-button

@@ -1,6 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form" fxLayout fxLayoutAlign="center start">
-	<mat-spinner *ngIf="loading"></mat-spinner>
-	<mat-card *ngIf="!loading" fxFlex="33%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
+	<mat-card fxFlex="33%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
 		<mat-card-title>
 			Авторизация
 		</mat-card-title>

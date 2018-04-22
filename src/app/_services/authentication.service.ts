@@ -8,7 +8,10 @@ import 'rxjs/add/operator/map';
 export class AuthenticationService {
 	public token: string;
 
-	constructor(private http: Http) {
+	constructor(
+		private router: Router,
+		private http: Http
+	) {
 		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.token = currentUser && currentUser.token;
 	}
@@ -38,5 +41,6 @@ export class AuthenticationService {
 	logout(): void {
 		this.token = null;
 		localStorage.removeItem('currentUser');
+		this.router.navigate(['/']);
 	}
 }
