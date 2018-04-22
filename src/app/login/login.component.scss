@@ -1,25 +1,4 @@
-.login{
-	padding-top: 8rem;
-}
-
 .login-form{
-	padding: 20px 25px;
-	background-color: #fff;
-	border-radius: 5px;
-	&__label{
-		font-weight: 300;
-	}
-}
-
-
-
-.has-error{
-	.help-block{
-		margin-top: .25rem;
-		font-size: 80%;
-		color: #dc3545;
-	}
-	.form-control{
-		border-color: #dc3545;
-	}
+	height: 100%;
+	padding: 10rem 0;
 }

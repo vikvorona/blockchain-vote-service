@@ -1,7 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from './material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 
 import { AppComponent } from './app.component';
@@ -11,10 +15,16 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
+import { VotingListService } from './_services/voting-list.service';
 import { FormModule } from './form/form.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { VotingComponent } from './voting/voting.component';
+import { AboutComponent } from './about/about.component';
+import { VotingListComponent } from './voting/voting-list/voting-list.component';
+import { VotingItemComponent } from './voting/voting-list/voting-item/voting-item.component';
+import { VotingFilterComponent } from './voting/voting-list/voting-filter/voting-filter.component';
+import { VotingAnswerComponent } from './voting/voting-list/voting-item/voting-answer/voting-answer.component';
 
 
 @NgModule({
@@ -24,17 +34,29 @@ import { NavbarComponent } from './navbar/navbar.component';
 		LoginComponent,
 		FooterComponent,
 		HeaderComponent,
-		NavbarComponent
+		VotingComponent,
+		AboutComponent,
+		VotingListComponent,
+		VotingItemComponent,
+		VotingFilterComponent,
+		VotingAnswerComponent
 	],
 	imports: [
 		BrowserModule,
+		BrowserAnimationsModule,
 		FormsModule,
+		ReactiveFormsModule,
 		HttpModule,
 		FormModule,
 		AppRoutingModule,
+		MaterialModule,
+		FlexLayoutModule,
 		NgbModule.forRoot()
 	],
-	providers: [AuthenticationService],
+	providers: [
+		AuthenticationService,
+		VotingListService
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

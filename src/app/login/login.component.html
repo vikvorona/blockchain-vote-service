@@ -1,43 +1,21 @@
-
-<div class="col-sm-4 offset-sm-4">
-	<div class="login">
-		<form name="form" class="login-form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-			<h2 class="text-center">Login</h2>
-			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-				<label class="login-form__label" for="username">Username</label>
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">
-							<i class="fa fa-user-circle-o" aria-hidden="true"></i>
-						</span>
-					</div>
-					<input type="text" class="form-control" name="username" [(ngModel)]="model.username" placeholder="Your name..." #username="ngModel" required />
-				</div>
-				<div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-			</div>
-			<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-				<label class="login-form__label" for="password">Password</label>
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">
-							<i class="fa fa-key" aria-hidden="true"></i>
-						</span>
-					</div>
-					<input type="password" class="form-control" name="password" [(ngModel)]="model.password" placeholder="Your password..." #password="ngModel" required />
-				</div>
-				<div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-			</div>
-			<div class="form-group mt-4">
-				<button [disabled]="loading" class="btn btn-primary btn-block">Login <i class="fa fa-sign-in" aria-hidden="true"></i></button>
-				<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />             
-				<div *ngIf="error" class="alert alert-danger mt-4">
-					<div class="text-center"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <strong>Error</strong><br>
-					{{error}}
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+<form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form" fxLayout fxLayoutAlign="center start">
+	<mat-spinner *ngIf="loading"></mat-spinner>
+	<mat-card *ngIf="!loading" fxFlex="33%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
+		<mat-card-title>
+			Авторизация
+		</mat-card-title>
+		<mat-card-content fxLayout="column">
+			<mat-form-field>
+				<input type="text" formControlName="username" matInput placeholder="Имя пользователя">
+			</mat-form-field>
+			<mat-form-field>
+				<input type="password" formControlName="password" matInput placeholder="Пароль">
+			</mat-form-field>
+		</mat-card-content>
+		<mat-card-actions fxLayout fxLayoutAlign="end center">
+			<button type="submit" mat-raised-button color="primary">Войти</button>
+		</mat-card-actions>
+	</mat-card>
+</form>
 
 

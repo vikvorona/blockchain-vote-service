@@ -18,12 +18,13 @@ export class PollService {
 	createPoll(poll): Promise<any> {
 		return this.http.put('http://localhost:3000/api/createPoll', {
 			name: poll.name,
-			address: poll.address
+			address: poll.address,
+			answers: poll.answers
 		}, this.options)
 				.toPromise();
 	}
 
-	getPolls() {
+	getPolls(): Promise<any> {
 		return this.http.get('http://localhost:3000/api/polls')
 				.toPromise().then((res: Response) => res.json());
 	}
