@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Voting } from '../../../_services/voting-list.service';
+import { Poll } from '../../../utils';
+import { PollService } from '../../../_services/poll.service';
 
 @Component({
 	selector: 'app-voting-item',
@@ -7,30 +8,25 @@ import { Voting } from '../../../_services/voting-list.service';
 	styleUrls: ['./voting-item.component.scss'],
 })
 export class VotingItemComponent implements OnInit {
-	constructor() { }
+	constructor(private pollService: PollService) { }
 
 	VOTING_STATUS = {
 		finished: 'Завершено',
-		onprogress: 'В процессе'
+		active: 'В процессе'
 	};
 
-	private _voting: Voting;
+	@Input('voting') voting: Poll;
 
-	@Input()
-	set voting(voting: Voting) {
-		this._voting = voting;
-	}
-
-	get voting(): Voting { return this._voting; }
-
-	public statusClasses;
-	public statusIconClasses;
 	public state;
 	public isFinished;
 
 	ngOnInit() {
-		this.state = this._voting.status === 'finished' ? 'inactive' : 'active';
-		this.isFinished = this._voting.status === 'finished';
+		this.state = this.voting.status === 'finished' ? 'inactive' : 'active';
+		this.isFinished = this.voting.status === 'finished';
+	}
+
+	vote(answer: string) {
+		this.pollService.vote(this.voting.name, answer);
 	}
 
 }

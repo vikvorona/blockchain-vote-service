@@ -1,5 +1,8 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Voting, VotingListService } from '../../_services/voting-list.service';
+import { PollService } from '../../_services/poll.service';
+import { Poll } from '../../utils';
+import { assignIn } from 'lodash';
 
 @Component({
 	selector: 'app-voting-list',
@@ -8,13 +11,14 @@ import { Voting, VotingListService } from '../../_services/voting-list.service';
 })
 export class VotingListComponent implements OnInit {
 
-	constructor(private votingListService: VotingListService) { }
+	constructor(private pollServise: PollService) { }
 
-
-	public votings: Voting[];
+	public polls: Array<any> = [];
 
 	ngOnInit() {
-		this.votings = this.votingListService.getVotings();
+		this.pollServise.getPolls().then((polls) => {
+			this.polls = polls.map((poll) => assignIn(new Poll(), poll));
+		});
 	}
 
 }

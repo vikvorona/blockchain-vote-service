@@ -19,7 +19,6 @@ export class UserService {
 		return this.http.put('http://localhost:3000/api/createUser', {
 			username: user.username,
 			password: user.password,
-			address: user.address,
 			firstname: user.firstname,
 			lastname: user.lastname
 		}, this.options)

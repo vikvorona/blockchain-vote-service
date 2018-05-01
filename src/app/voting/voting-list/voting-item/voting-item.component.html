@@ -9,8 +9,8 @@
 		{{ voting.description }}
 		<mat-nav-list disableRipple="true">
 			<mat-list-item *ngFor="let answer of voting.answers">
-				{{ answer }}
-				<button *ngIf="!isFinished" mat-raised-button color="accent">
+				{{ answer.answer + ' - ' + answer.count }}
+				<button *ngIf="!isFinished" mat-raised-button color="accent" (click)="vote(answer)">
 					<mat-icon>done</mat-icon>
 					Голосовать
 				</button>

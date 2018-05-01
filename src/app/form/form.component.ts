@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import * as Web3 from 'web3';
 import { Router } from '@angular/router';
+import { PollService } from '../_services/poll.service';
+import { User } from '../utils';
+import { UserService } from '../_services/user.service';
 
 
 @Component({
@@ -10,56 +13,33 @@ import { Router } from '@angular/router';
 })
 export class FormComponent {
 
-	vote: string;
-	votes: Array<string> = ['first', 'second'];
-	voteCounts: Array<number> = [];
 	subject: string;
-	web3 = new Web3(new Web3.providers.HttpProvider('http: //localhost: 8008'));
-	contactAbi = this.web3.eth.contract([
-		{'constant': false,
-			'inputs': [{'name': 'name', 'type': 'string'}], 'name': 'addName',
-			'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function'},
-		{'constant': true,
-			'inputs': [{'name': '', 'type': 'uint256'}], 'name': 'arrayCount',
-			'outputs': [{'name': '', 'type': 'uint256'}], 'payable': false, 'stateMutability': 'view', 'type': 'function'},
-		{'constant': true,
-			'inputs': [], 'name': 'getCount',
-			'outputs': [{'name': '', 'type': 'uint256[]'}], 'payable': false, 'stateMutability': 'view', 'type': 'function'},
-		{'constant': true,
-			'inputs': [{'name': '', 'type': 'uint256'}], 'name': 'arrayNames',
-			'outputs': [{'name': '', 'type': 'string'}], 'payable': false, 'stateMutability': 'view', 'type': 'function'},
-		{'constant': false,
-			'inputs': [{'name': 'name', 'type': 'string'}], 'name': 'vote',
-			'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function'}]);
-	voteContract = this.contactAbi.at('0xfcad216379b18c56bacbb3c0514618daf7912392');
+	user = new User();
+	answers: Array<string> = ['a'];
 
-	constructor(private router: Router) {
-		console.log(this.voteContract);
-		this.web3.eth.defaultAccount = '0x56604266fc19aae07c1ff968eaca81ae20ebe492';
+	constructor(private pollService: PollService, private userService: UserService) {
 	}
 
-	countVoices() {
-		const voteCounts = this.voteContract.getCount();
-		voteCounts.forEach((count, i) => {
-			this.voteCounts[i] = count.c[0];
-		});
+	customTrackBy(index: number, obj: any): any {
+		return index;
 	}
 
 	addSubject() {
-		this.votes.push(this.subject);
-		this.voteContract.addName(this.subject);
-		this.voteCounts.length = this.votes.length;
-		this.subject = null;
+		this.pollService.createPoll({
+			name: this.subject,
+			answers: this.answers
+		});
 	}
 
-	addVote() {
-		this.voteContract.vote(this.vote);
-		this.countVoices();
-		this.vote = null;
+	canAdd() {
+		return this.answers.every((answer) => !!answer) && this.subject;
 	}
 
-	logout(): void {
-		localStorage.removeItem('currentUser');
-		this.router.navigate(['/login']);
+	addUser() {
+		this.userService.createUser(this.user);
+	}
+
+	canAddUser() {
+		return this.user.firstname && this.user.lastname && this.user.username && this.user.password;
 	}
 }

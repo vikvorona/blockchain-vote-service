@@ -25,6 +25,7 @@ import { VotingListComponent } from './voting/voting-list/voting-list.component'
 import { VotingItemComponent } from './voting/voting-list/voting-item/voting-item.component';
 import { VotingFilterComponent } from './voting/voting-list/voting-filter/voting-filter.component';
 import { VotingAnswerComponent } from './voting/voting-list/voting-item/voting-answer/voting-answer.component';
+import { PollService } from './_services/poll.service';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { VotingAnswerComponent } from './voting/voting-list/voting-item/voting-a
 	],
 	providers: [
 		AuthenticationService,
-		VotingListService
+		VotingListService,
+		PollService
 	],
 	bootstrap: [AppComponent]
 })
