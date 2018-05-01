@@ -19,7 +19,12 @@
 	
 	<mat-menu #subMenu
 						xPosition="before">
-		
+						
+		<button *ngIf="!isLoggedIn" mat-menu-item (click)="login()">
+			<mat-icon>power_settings_new</mat-icon>
+			<span>Войти</span>
+		</button>
+
 		<button *ngIf="isNotificationsDisabled" mat-menu-item (click)="toggleNotifications()">
 			<mat-icon>notifications</mat-icon>
 				<span>Вкл. уведомления</span>
@@ -29,16 +34,28 @@
 			<span>Выкл. уведомления</span>
 		</button>
 
-		<button mat-menu-item (click)="logout()">
+		<button *ngIf="isLoggedIn" mat-menu-item (click)="logout()">
 				<mat-icon>power_settings_new</mat-icon>
 				<span>Выйти</span>
-			</button>
+		</button>
 
+	</mat-menu>
+
+	<mat-menu #notificationsMenu
+						xPosition="before">
+		<ng-container *ngIf="(notifications | async) as notification; else noNotifications">
+				{{notification.text}}
+		</ng-container>
+		<ng-template #noNotifications>
+			<div mat-menu-item>No notifications</div>
+		</ng-template>
 	</mat-menu>
 	
 	<div fxFlex
 			 fxLayoutAlign="end">
-		<button *ngIf="!isNotificationsDisabled" mat-icon-button>
+		<button *ngIf="!isNotificationsDisabled" 
+						mat-icon-button
+						[matMenuTriggerFor]="notificationsMenu">
  			<mat-icon>notifications</mat-icon>
 		</button>
 		<button mat-icon-button

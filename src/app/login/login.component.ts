@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { User } from '../_models/users.model';
+import { UserService } from '../_services/user.service';
 
 @Component({
 	templateUrl: 'login.component.html',
@@ -12,10 +14,13 @@ import { MatSnackBar } from '@angular/material';
 export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
+	isLoggedIn: boolean;
+	user: User;
 
 	constructor(
 		private router: Router,
 		private authenticationService: AuthenticationService,
+		private userService: UserService,
 		private fb: FormBuilder,
 		public snackBar: MatSnackBar
 	) {
@@ -23,11 +28,12 @@ export class LoginComponent implements OnInit {
 			'username': ['', Validators.required],
 			'password': ['', Validators.required]
 		});
+
 	}
 
 	ngOnInit() {
-		// reset login status
-		this.authenticationService.logout();
+		this.authenticationService.getLoggedInSubject().subscribe((isLoggedIn) => this.isLoggedIn = isLoggedIn);
+		this.user = this.userService.getUser();
 	}
 
 	openSnackBar(message: string) {
@@ -39,9 +45,13 @@ export class LoginComponent implements OnInit {
 
 	submitForm() {
 		this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
-		.subscribe(result => {
-			result === true ? this.router.navigate(['/voting']) : this.openSnackBar('Имя пользователя или пароль не верны');
-		}
-	);
-}
+			.subscribe(result => {
+				result === true ? this.router.navigate(['/voting']) : this.openSnackBar('Имя пользователя или пароль не верны');
+			}
+		);
+	}
+
+	logout() {
+		this.authenticationService.logout();
+	}
 }

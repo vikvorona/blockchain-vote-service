@@ -1,20 +1,33 @@
-<form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form" fxLayout fxLayoutAlign="center start">
-	<mat-card fxFlex="33%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
-		<mat-card-title>
-			Авторизация
-		</mat-card-title>
-		<mat-card-content fxLayout="column">
-			<mat-form-field>
-				<input type="text" formControlName="username" matInput placeholder="Имя пользователя">
-			</mat-form-field>
-			<mat-form-field>
-				<input type="password" formControlName="password" matInput placeholder="Пароль">
-			</mat-form-field>
-		</mat-card-content>
-		<mat-card-actions fxLayout fxLayoutAlign="end center">
-			<button type="submit" mat-raised-button color="primary">Войти</button>
-		</mat-card-actions>
-	</mat-card>
-</form>
+<ng-container *ngIf="!isLoggedIn; else loggedIn">
+	<form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="login-form" fxLayout fxLayoutAlign="center start">
+		<mat-card fxFlex="33%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
+			<mat-card-title>
+				Авторизация
+			</mat-card-title>
+			<mat-card-content fxLayout="column">
+				<mat-form-field>
+					<input type="text" formControlName="username" matInput placeholder="Имя пользователя">
+				</mat-form-field>
+				<mat-form-field>
+					<input type="password" formControlName="password" matInput placeholder="Пароль">
+				</mat-form-field>
+			</mat-card-content>
+			<mat-card-actions fxLayout fxLayoutAlign="end center">
+				<button type="submit" mat-raised-button color="primary">Войти</button>
+			</mat-card-actions>
+		</mat-card>
+	</form>
+</ng-container>
+<ng-template #loggedIn>
+	<div fxLayout fxLayoutAlign="center start" class="login-form">
+		<mat-card fxFlex="25%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
+			<div fxLayout="row" fxLayoutAlign="space-between center">
+				<div fxFlex>Добро пожаловать, {{user.username}}</div>
+				<button (click)="logout()" mat-raised-button color="primary">Выйти</button>
+			</div>
+		</mat-card>
+	</div>
+</ng-template>
+
 
 

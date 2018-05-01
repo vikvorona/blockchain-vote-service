@@ -26,6 +26,7 @@ import { VotingItemComponent } from './voting/voting-list/voting-item/voting-ite
 import { VotingFilterComponent } from './voting/voting-list/voting-filter/voting-filter.component';
 import { VotingAnswerComponent } from './voting/voting-list/voting-item/voting-answer/voting-answer.component';
 import { HomeComponent } from './home/home.component';
+import { NotificationsService } from './_services/notifications.service';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { HomeComponent } from './home/home.component';
 	],
 	providers: [
 		AuthenticationService,
-		VotingListService
+		VotingListService,
+		NotificationsService
 	],
 	bootstrap: [AppComponent]
 })

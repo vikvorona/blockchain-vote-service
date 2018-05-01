@@ -9,11 +9,13 @@
 		{{ voting.description }}
 		<mat-nav-list disableRipple="true">
 			<mat-list-item *ngFor="let answer of voting.answers">
-				{{ answer }}
-				<button *ngIf="!isFinished" mat-raised-button color="accent">
-					<mat-icon>done</mat-icon>
-					Голосовать
-				</button>
+				<div fxLayout="row" fxLayoutAlign="space-between center">
+						<div fxFlex>{{ answer }}</div>
+						<button *ngIf="!isFinished" mat-raised-button color="accent">
+							<mat-icon>done</mat-icon>
+							Голосовать
+						</button>
+				</div>
 			</mat-list-item>
 		</mat-nav-list>
 	</mat-card-content>
