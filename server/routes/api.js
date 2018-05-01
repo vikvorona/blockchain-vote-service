@@ -22,7 +22,7 @@ accountAbi = web3.eth.contract([{"constant":false,"inputs":[{"name":"pollAddress
 
 mongoose.connect(uri, function(err) {
 	if (err) throw err;
-
+	
 	/*var newUser = new User({
 		_id: new mongoose.Types.ObjectId(),
 		username: "admin",
@@ -31,38 +31,38 @@ mongoose.connect(uri, function(err) {
 		firstname: "Administrator",
 		lastname: "Blockchain"
 	})
-
+	
 	newUser.save(function(err) {
 		if (err) throw err;
-
+		
 		console.log('New user saved.');
 	})*/
-
+	
 	// Authenticate User
 	router.post("/authenticate", async(request, response) => {
 		await passport.authenticate('local', function (err, user) {
 			if (user == false) {
 				response.send({ error: 'Invalid password or username' });
 			} else {
-			//--payload - информация которую мы храним в токене и можем из него получать
-			const payload = {
-				id: user._id,
-				username: user.username,
-				permissions: user.permissions
-			};
-			const token = jwt.sign(payload, jwtsecret); //здесь создается JWT
-			response.send({user: user.username, token: token});
+				//--payload - информация которую мы храним в токене и можем из него получать
+				const payload = {
+					id: user._id,
+					username: user.username,
+					permissions: user.permissions
+				};
+				const token = jwt.sign(payload, jwtsecret); //здесь создается JWT
+				response.send({user: user.username, token: token});
 			}
 		})(request, response);
 	});
-
+	
 	// Get Users list
 	router.get("/users", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
 			if (user && user.permissions === "admin") {
 				User.find({permissions: "user"}, (err, users) => {
 					if (err) throw err;
-
+					
 					response.send(users);
 				})
 			} else {
@@ -70,12 +70,12 @@ mongoose.connect(uri, function(err) {
 			}
 		})(request, response)
 	});
-
+	
 	// Check User's token
 	router.get("/checkUser", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
 			if (err) throw err;
-
+			
 			if (user) {
 				response.send({ exists: true });
 			} else {
@@ -84,6 +84,9 @@ mongoose.connect(uri, function(err) {
 		})(request, response)
 	});
 
+	// Get User's notifications
+	// TODO
+	
 	// Create User
 	router.put("/createUser", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
@@ -224,7 +227,7 @@ mongoose.connect(uri, function(err) {
 			}
 		})(request, response)
 	});
-
+	
 	// Change user's password
 	router.put("/changePassword", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
@@ -247,7 +250,7 @@ mongoose.connect(uri, function(err) {
 			}
 		})(request, response)
 	});
-
+	
 	// Remove User
 	router.delete("/deleteUser", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
@@ -268,11 +271,11 @@ function checkIfUserExists(username) {
 	var exists = new Promise((resolve, reject) => {
 		User.find({ username: username}, (err, users) => {
 			if (err) throw err;
-
+			
 			users.length ? reject() : resolve();
 		});
 	});
-
+	
 	return exists;
 }
 

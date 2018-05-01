@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { AuthenticationService } from './authentication.service';
+import { User } from '../_models/users.model';
 
 @Injectable()
 export class UserService {
@@ -38,5 +39,9 @@ export class UserService {
 	getUsers() {
 		return this.http.get('http://localhost:3000/api/users', this.options)
 				.toPromise().then((res: Response) => res.json());
+	}
+
+	getUser(): User {
+		return JSON.parse(localStorage.getItem('currentUser'));
 	}
 }

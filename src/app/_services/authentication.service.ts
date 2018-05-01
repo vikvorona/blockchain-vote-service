@@ -3,14 +3,30 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthenticationService {
 	public token: string;
+	private currentUser: any;
+	public isLoggedIn$ = new BehaviorSubject<boolean>(null);
 
-	constructor(private http: Http) {
-		const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-		this.token = currentUser && currentUser.token;
+	constructor(
+		private router: Router,
+		private http: Http
+	) {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		this.token = this.currentUser && this.currentUser.token;
+		this.checkUser().then(exists => {
+			this.isLoggedIn$.next(false);
+			if (exists) {
+				this.isLoggedIn$.next(true);
+			}
+		});
+	}
+
+	getLoggedInSubject(): Observable<boolean> {
+		return this.isLoggedIn$.asObservable();
 	}
 
 	login(username: string, password: string): Observable<boolean> {
@@ -19,9 +35,8 @@ export class AuthenticationService {
 				const token = response.json() && response.json().token;
 				if (token) {
 					this.token = token;
-
+					this.isLoggedIn$.next(true);
 					localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token}));
-
 					return true;
 				} else {
 					return false;
@@ -36,7 +51,9 @@ export class AuthenticationService {
 	}
 
 	logout(): void {
+		this.isLoggedIn$.next(false);
 		this.token = null;
 		localStorage.removeItem('currentUser');
+		this.router.navigate(['/login']);
 	}
 }

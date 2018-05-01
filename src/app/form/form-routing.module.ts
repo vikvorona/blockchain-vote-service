@@ -6,7 +6,7 @@ import { AdminGuard } from '../_guards/admin.guard';
 
 export const mainRoutes: Routes = [
 	{
-		path: '',
+		path: 'asd',
 		component: FormComponent,
 		canActivate: [AuthGuard]
 	}

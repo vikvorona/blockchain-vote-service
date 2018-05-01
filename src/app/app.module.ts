@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 
@@ -26,6 +26,8 @@ import { VotingItemComponent } from './voting/voting-list/voting-item/voting-ite
 import { VotingFilterComponent } from './voting/voting-list/voting-filter/voting-filter.component';
 import { VotingAnswerComponent } from './voting/voting-list/voting-item/voting-answer/voting-answer.component';
 import { PollService } from './_services/poll.service';
+import { HomeComponent } from './home/home.component';
+import { NotificationsService } from './_services/notifications.service';
 
 
 @NgModule({
@@ -40,7 +42,8 @@ import { PollService } from './_services/poll.service';
 		VotingListComponent,
 		VotingItemComponent,
 		VotingFilterComponent,
-		VotingAnswerComponent
+		VotingAnswerComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -57,7 +60,8 @@ import { PollService } from './_services/poll.service';
 	providers: [
 		AuthenticationService,
 		VotingListService,
-		PollService
+		PollService,
+		NotificationsService
 	],
 	bootstrap: [AppComponent]
 })
