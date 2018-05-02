@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
+import { USER_PERMISSIONS } from '../_constants/permissions.constants';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -12,21 +13,19 @@ export class AdminGuard implements CanActivate {
 		return JSON.parse(window.atob(base64));
 	}
 
-	static isAdmin() {
+	static isAdmin(): boolean {
 		const currentUser = localStorage.getItem('currentUser'),
-			curUserJson = currentUser && JSON.parse(currentUser),
-			userToken = curUserJson && this.parseJwt(curUserJson.token),
-			userPermissions = userToken && userToken.permissions;
-		return userPermissions === 'admin';
+					curUserJson = currentUser && JSON.parse(currentUser),
+					userToken = curUserJson && this.parseJwt(curUserJson.token),
+					userPermissions = userToken && userToken.permissions;
+		return userPermissions === USER_PERMISSIONS.admin;
 	}
 
 	canActivate() {
 		if (AdminGuard.isAdmin()) {
-			// logged in so return true
 			return true;
 		}
 
-		// not logged in so redirect to login page
 		this.router.navigate(['/login']);
 		return false;
 	}

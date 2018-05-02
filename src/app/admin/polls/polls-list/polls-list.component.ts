@@ -28,7 +28,7 @@ export class PollsListComponent implements OnInit {
 	ngOnInit() {
 
 
-		this.pollService.getPolls().then((polls) => {
+		this.pollService.getPolls().subscribe((polls) => {
 			this.pollsData = polls.map((poll) => {
 				switch (poll.status) {
 					case POLL_STATUSES.active:
@@ -50,8 +50,8 @@ export class PollsListComponent implements OnInit {
 	}
 
 	applyFilter(filterValue: string) {
-		filterValue = filterValue.trim(); // Remove whitespace
-		filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+		filterValue = filterValue.trim();
+		filterValue = filterValue.toLowerCase();
 		this.dataSource.filter = filterValue;
 		this.isFilteredData = this.dataSource.filteredData.length ? true : false;
 	}

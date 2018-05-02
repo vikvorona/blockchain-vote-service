@@ -169,7 +169,7 @@ mongoose.connect(uri, function(err) {
 					let obj = contract.getCounts(index);
 					console.log('voted by ', result.args._from, ': ', obj[0]);
 					const sendpoll = {
-						answer: obj,
+						count: obj[1],
 						index: index
 					}
 					ws.send(JSON.stringify(sendpoll), (err) => {

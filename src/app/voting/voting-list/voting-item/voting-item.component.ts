@@ -36,7 +36,7 @@ export class VotingItemComponent implements OnInit {
 					if (parsedPoll.address) {
 						this.poll = assignIn(new Poll(), parsedPoll);
 					} else {
-						this.poll.answers[parsedPoll.index].count = parsedPoll.answer[1];
+						this.poll.answers[parsedPoll.index].count = parsedPoll.count;
 					}
 				}
 			});
@@ -45,7 +45,7 @@ export class VotingItemComponent implements OnInit {
 	}
 
 	vote(answer: string) {
-		this.pollService.vote(this.voting.name, answer);
+		this.pollService.vote(this.voting.name, answer).subscribe();
 	}
 
 }

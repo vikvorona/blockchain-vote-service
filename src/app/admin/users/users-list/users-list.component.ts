@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../_services/user.service';
-import { User } from '../../../_models/users.model';
+import { IUser } from '../../../_models/users.model';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material';
 	styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-	usersData: User[];
+	usersData: IUser[];
 	dataSource: any;
 	isFilteredData: boolean;
 	isUsersExists: boolean;
@@ -22,7 +22,7 @@ export class UsersListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.userService.getUsers().then((users) => {
+		this.userService.getUsers().subscribe((users) => {
 			this.usersData = users;
 			this.dataSource = new MatTableDataSource(this.usersData);
 			this.isUsersExists = this.usersData.length ? true : false;
@@ -30,8 +30,8 @@ export class UsersListComponent implements OnInit {
 	}
 
 	applyFilter(filterValue: string) {
-		filterValue = filterValue.trim(); // Remove whitespace
-		filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+		filterValue = filterValue.trim();
+		filterValue = filterValue.toLowerCase();
 		this.dataSource.filter = filterValue;
 		this.isFilteredData = this.dataSource.filteredData.length ? true : false;
 	}

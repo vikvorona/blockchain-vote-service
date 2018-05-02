@@ -15,8 +15,8 @@ export class AdminComponent implements OnInit {
 		private userServiece: UserService,
 		private pollsService: PollService
 	) {
-		this.userServiece.getUsers().then((users) => this.usersCount = users.length);
-		this.pollsService.getPolls().then((polls) => this.pollsCount = polls.length);
+		this.userServiece.getUsers().subscribe((users) => this.usersCount = users.length);
+		this.pollsService.getPolls().subscribe((polls) => this.pollsCount = polls.length);
 	}
 
 	ngOnInit() {

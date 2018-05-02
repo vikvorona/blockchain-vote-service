@@ -5,12 +5,14 @@ import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Poll } from '../utils';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
 	public token: string;
-	private currentUser: any;
 	public isLoggedIn$ = new BehaviorSubject<boolean>(null);
+
+	private currentUser: any;
 
 	constructor(
 		private router: Router,
@@ -19,7 +21,7 @@ export class AuthenticationService {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		this.token = this.currentUser && this.currentUser.token;
 		this.isLoggedIn$.next(false);
-		this.checkUser().then(exists => {
+		this.checkUser().subscribe(exists => {
 			if (exists) {
 				this.isLoggedIn$.next(true);
 			}
@@ -31,7 +33,7 @@ export class AuthenticationService {
 	}
 
 	login(username: string, password: string): Observable<boolean> {
-		return this.http.post('http://localhost:3000/api/authenticate', { username: username, password: password })
+		return this.http.post(environment.API_URL + '/authenticate', { username: username, password: password })
 			.map((response: any) => {
 				const token = response && response.token;
 				if (token) {
@@ -45,10 +47,11 @@ export class AuthenticationService {
 			});
 	}
 
-	checkUser() {
+	checkUser(): Observable<boolean> {
 		const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.token });
 		const options = { headers };
-		return this.http.get('http://localhost:3000/api/checkUser', options).map((response: any) => response.exists).toPromise();
+		return this.http.get(environment.API_URL + '/checkUser', options)
+			.map((response: any) => response.exists);
 	}
 
 	logout(): void {

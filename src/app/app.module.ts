@@ -16,7 +16,6 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
-import { VotingListService } from './_services/voting-list.service';
 import { FormModule } from './form/form.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -69,9 +68,9 @@ import { PollsListComponent } from './admin/polls/polls-list/polls-list.componen
 	],
 	providers: [
 		AuthenticationService,
-		VotingListService,
 		PollService,
-		NotificationsService
+		NotificationsService,
+		UserService
 	],
 	bootstrap: [AppComponent]
 })

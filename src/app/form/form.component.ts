@@ -3,7 +3,7 @@ import * as Web3 from 'web3';
 import { Router } from '@angular/router';
 import { PollService } from '../_services/poll.service';
 import { UserService } from '../_services/user.service';
-import { User } from '../_models/users.model';
+import { IUser } from '../_models/users.model';
 
 
 @Component({
