@@ -6,8 +6,15 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
+import { AdminComponent } from './admin/admin.component';
 
 export const appRoutes: Routes = [
+	{
+		path: 'admin',
+		component: AdminComponent,
+		canActivate: [AdminGuard]
+	},
 	{
 		path: 'login',
 		component: LoginComponent

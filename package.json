@@ -26,6 +26,8 @@
     "@angular/platform-browser-dynamic": "^5.2.9",
     "@angular/router": "^5.2.9",
     "@ng-bootstrap/ng-bootstrap": "^1.0.1",
+    "@ngx-progressbar/core": "^4.3.0",
+    "@ngx-progressbar/http": "^4.3.0",
     "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
     "dotenv": "^5.0.1",

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import * as Web3 from 'web3';
 import { Router } from '@angular/router';
 import { PollService } from '../_services/poll.service';
-import { User } from '../utils';
 import { UserService } from '../_services/user.service';
+import { User } from '../_models/users.model';
 
 
 @Component({
@@ -14,10 +14,11 @@ import { UserService } from '../_services/user.service';
 export class FormComponent {
 
 	subject: string;
-	user = new User();
-	answers: Array<string> = ['a'];
+	user: User;
+	answers: Array<string>;
 
 	constructor(private pollService: PollService, private userService: UserService) {
+		this.answers = [];
 	}
 
 	customTrackBy(index: number, obj: any): any {

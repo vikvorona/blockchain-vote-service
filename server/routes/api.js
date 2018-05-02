@@ -74,6 +74,7 @@ mongoose.connect(uri, function(err) {
 	// Check User's token
 	router.get("/checkUser", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
+			console.log(request);
 			if (err) throw err;
 			
 			if (user) {
@@ -83,7 +84,7 @@ mongoose.connect(uri, function(err) {
 			}
 		})(request, response)
 	});
-
+	
 	// Get User's notifications
 	// TODO
 	
@@ -118,7 +119,7 @@ mongoose.connect(uri, function(err) {
 								})
 								newUser.save(function(err) {
 									if (err) throw err;
-
+									
 									console.log('New user ', request.body.username, ' saved.');
 									response.send();
 								})
@@ -133,40 +134,47 @@ mongoose.connect(uri, function(err) {
 			}
 		})(request, response)
 	});
-
+	
 	// Get Polls list
 	router.get("/polls", (request, response) => {
 		Poll.find({status: "active"}, (err, polls) => {
 			if (err) throw err;
-
-			const pollsContracts = [];
-
-			polls.forEach((poll) => {
-				console.log('here we go address: ', poll.address);
-				const contract = pollAbi.at(poll.address);
-				const answers = [];
-				const count = contract.getAnswersCount();
-				console.log('count', count);
-				for (let i = 0; i < count; i++) {
-					let obj = contract.getCounts(i);
-					console.log(i, ': ', obj);
-					answers.push(obj);
-				}
-				pollsContracts.push({
-					name: poll.name,
-					answers: answers
-				})
-			})
-
-			response.send(pollsContracts);
+			
+			response.send(polls);
 		});
 	});
-
+	
+	// Get Bch Poll
+	router.get("/poll", (request, response) => {
+		Poll.findOne({name: request.query.name}, (err, poll) => {
+			if (err) throw err;
+			
+			console.log('here we go address: ', poll.name, poll.address, request.query.name);
+			const contract = pollAbi.at(poll.address);
+			const answers = [];
+			const count = contract.getAnswersCount();
+			console.log('count', count);
+			for (let i = 0; i < count; i++) {
+				let obj = contract.getCounts(i);
+				console.log(i, ': ', obj);
+				answers.push(obj);
+			}
+			console.log({
+				address: poll.address,
+				answers: answers
+			});
+			response.send({
+				address: poll.address,
+				answers: answers
+			});
+		})
+	});
+	
 	router.post("/vote", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
 			Poll.findOne({name: request.body.name}, (err, poll) => {
 				if (err) throw err;
-
+				
 				if (poll) {
 					const pollContract = pollAbi.at(poll.address);
 					const contract = accountAbi.at(user.address);
@@ -180,7 +188,7 @@ mongoose.connect(uri, function(err) {
 			})
 		})(request, response);
 	});
-
+	
 	// Create Poll
 	router.put("/createPoll", async(request, response) => {
 		await passport.authenticate('jwt', (err, user) => {
@@ -214,7 +222,7 @@ mongoose.connect(uri, function(err) {
 								})
 								newPoll.save(function(err) {
 									if (err) throw err;
-
+									
 									console.log('New poll ', request.body.name, ' saved.');
 									response.send();
 								})
@@ -265,7 +273,7 @@ mongoose.connect(uri, function(err) {
 			}
 		})(request, response)
 	});
-})
+});
 
 function checkIfUserExists(username) {
 	var exists = new Promise((resolve, reject) => {

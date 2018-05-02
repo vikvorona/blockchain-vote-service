@@ -1,5 +1,11 @@
-<app-voting-filter></app-voting-filter>
-<ng-container *ngFor="let poll of polls">
-    <app-voting-item [voting]="poll"></app-voting-item>
-</ng-container>
+<div fxLayout fxLayoutAlign="center start">
+	<div fxFlex="50%" fxFlex.lt-lg="75%" fxFlex.lt-sm="100%">
+		<app-voting-filter></app-voting-filter>
+		<ng-container *ngFor="let poll of polls">
+			<app-voting-item [voting]="poll"></app-voting-item>
+		</ng-container>
+	</div>	
+</div>
+
+
 

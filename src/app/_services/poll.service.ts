@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -7,11 +7,11 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class PollService {
-	headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-	options = new RequestOptions({ headers: this.headers });
+	headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+	options = { headers: this.headers };
 
 	constructor(
-		private http: Http,
+		private http: HttpClient,
 		private authenticationService: AuthenticationService) {
 	}
 
@@ -25,7 +25,14 @@ export class PollService {
 
 	getPolls(): Promise<any> {
 		return this.http.get('http://localhost:3000/api/polls')
-				.toPromise().then((res: Response) => res.json());
+				.toPromise();
+	}
+
+	getPoll(name): Promise<any> {
+		return this.http.get(`http://localhost:3000/api/poll`, {
+			params: { name }
+		})
+		.toPromise();
 	}
 
 	vote(name, answer): Promise<any> {
@@ -33,6 +40,6 @@ export class PollService {
 			name: name,
 			answer: answer
 		})
-		.toPromise().then((res: Response) => res.json());
+		.toPromise();
 	}
 }

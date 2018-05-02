@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -8,11 +8,11 @@ import { User } from '../_models/users.model';
 
 @Injectable()
 export class UserService {
-	headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-	options = new RequestOptions({ headers: this.headers });
+	headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+	options = { headers: this.headers };
 
 	constructor(
-		private http: Http,
+		private http: HttpClient,
 		private authenticationService: AuthenticationService) {
 	}
 
@@ -38,7 +38,7 @@ export class UserService {
 
 	getUsers() {
 		return this.http.get('http://localhost:3000/api/users', this.options)
-				.toPromise().then((res: Response) => res.json());
+				.toPromise();
 	}
 
 	getUser(): User {
