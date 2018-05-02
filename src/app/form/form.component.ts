@@ -14,7 +14,12 @@ import { User } from '../_models/users.model';
 export class FormComponent {
 
 	subject: string;
-	user: User;
+	user = {
+		username: '',
+		password: '',
+		firstname: '',
+		lastname: ''
+	};
 	answers: Array<string>;
 
 	constructor(private pollService: PollService, private userService: UserService) {
