@@ -20,7 +20,8 @@ export class VotingItemComponent implements OnInit {
 
 	public state;
 	public isFinished;
-	public poll;
+	public poll: Poll;
+	public open = false;
 
 	ngOnInit() {
 		this.state = this.voting.status === this.POLL_STATUSES.finished ? 'inactive' : 'active';
@@ -28,7 +29,19 @@ export class VotingItemComponent implements OnInit {
 	}
 
 	getPoll() {
-		this.pollService.getPoll(this.voting.name).then((poll) => this.poll = assignIn(new Poll(), poll));
+		if (!this.open) {
+			this.pollService.getPoll(this.voting.name).subscribe((poll) => {
+				if (poll) {
+					const parsedPoll = JSON.parse(poll);
+					if (parsedPoll.address) {
+						this.poll = assignIn(new Poll(), parsedPoll);
+					} else {
+						this.poll.answers[parsedPoll.index].count = parsedPoll.answer[1];
+					}
+				}
+			});
+			this.open = true;
+		}
 	}
 
 	vote(answer: string) {

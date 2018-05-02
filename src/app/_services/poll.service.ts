@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { AuthenticationService } from './authentication.service';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class PollService {
@@ -28,18 +30,20 @@ export class PollService {
 				.toPromise();
 	}
 
-	getPoll(name): Promise<any> {
-		return this.http.get(`http://localhost:3000/api/poll`, {
-			params: { name }
-		})
-		.toPromise();
+	getPoll(name): Observable<any> {
+		const poll = new WebSocket(`ws://localhost:3000/api/poll?name=${name}`);
+		const subj$ = new BehaviorSubject(null);
+		poll.onmessage = (event) => {
+			subj$.next(event.data);
+		};
+		return subj$.asObservable();
 	}
 
 	vote(name, answer): Promise<any> {
 		return this.http.post('http://localhost:3000/api/vote', {
 			name: name,
 			answer: answer
-		})
+		}, this.options)
 		.toPromise();
 	}
 }

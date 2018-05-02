@@ -11,6 +11,7 @@ passport.use(new LocalStrategy({
 	session: false
 	},
 	function (username, password, done) {
+		console.log('local');
 	User.findOne({username}, (err, user) => {
 		if (err) {
 			return done(err);
