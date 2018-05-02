@@ -30,6 +30,8 @@ import { PollService } from './_services/poll.service';
 import { HomeComponent } from './home/home.component';
 import { NotificationsService } from './_services/notifications.service';
 import { AdminComponent } from './admin/admin.component';
+import { UsersListComponent } from './admin/users/users-list/users-list.component';
+import { PollsListComponent } from './admin/polls/polls-list/polls-list.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { AdminComponent } from './admin/admin.component';
 		VotingFilterComponent,
 		VotingAnswerComponent,
 		HomeComponent,
-		AdminComponent
+		AdminComponent,
+		UsersListComponent,
+		PollsListComponent
 	],
 	imports: [
 		BrowserModule,

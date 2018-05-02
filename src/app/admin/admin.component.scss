@@ -1,0 +1,13 @@
+.admin {
+	margin: 1.5rem 0;
+	.mat-card-content {
+		font-size: 1.1rem;
+	}
+	&-stats{
+		padding-top: 0.3rem;
+	}
+	
+	&__users-count, &__polls-count {
+		padding-bottom: 0.8rem;
+	}
+}

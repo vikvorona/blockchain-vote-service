@@ -1,3 +1,35 @@
-<p>
-  admin works!
-</p>
+<div fxLayout fxLayoutAlign="center start">
+	<div fxFlex="50%" fxFlex.lt-lg="75%" fxFlex.lt-sm="100%">
+		<mat-card class="admin">
+			<mat-card-title>Администрирование</mat-card-title>
+			<mat-card-content>
+				<div class="admin-content">
+					<div class="admin-stats">
+						<div *ngIf="usersCount" class="admin__users-count" fxLayoutAlign="space-between center">
+							<div fxLayoutAlign="start center" fxLayoutGap="5px">
+								<mat-icon>wc</mat-icon>
+								<span>Пользователей</span>
+							</div>
+							<div>
+								{{usersCount}}
+							</div>
+						</div>
+						<div *ngIf="pollsCount" class="admin__polls-count" fxLayoutAlign="space-between center">
+							<div fxLayoutAlign="start center" fxLayoutGap="5px">
+								<mat-icon>equalizer</mat-icon>
+								<span>Голосований</span>
+							</div>
+							<div>
+								{{pollsCount}}
+							</div>
+						</div>
+					</div>
+					<div class="admin-moderate">
+						<app-users-list></app-users-list>	
+						<app-polls-list></app-polls-list>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>	
+</div>

@@ -36,9 +36,9 @@ export class UserService {
 				.toPromise();
 	}
 
-	getUsers() {
+	getUsers(): Promise<any> {
 		return this.http.get('http://localhost:3000/api/users', this.options)
-				.toPromise();
+			.toPromise();
 	}
 
 	getUser(): User {
