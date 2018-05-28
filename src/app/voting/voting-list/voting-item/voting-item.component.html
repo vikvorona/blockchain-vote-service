@@ -1,19 +1,23 @@
-<mat-card>
+<mat-card (click)="getPoll()" class="voting-item">
 	<mat-card-title>
 		{{voting.name}}
 	</mat-card-title>
 	<mat-card-subtitle>
-		{{ VOTING_STATUS[voting.status] }}
+		{{ POLL_STATUSES_NAMES[voting.status] }}
 	</mat-card-subtitle>
 	<mat-card-content>
 		{{ voting.description }}
-		<mat-nav-list disableRipple="true">
-			<mat-list-item *ngFor="let answer of voting.answers">
-				{{ answer.answer + ' - ' + answer.count }}
-				<button *ngIf="!isFinished" mat-raised-button color="accent" (click)="vote(answer)">
-					<mat-icon>done</mat-icon>
-					Голосовать
-				</button>
+		<mat-nav-list *ngIf="poll" disableRipple="true">
+			<mat-list-item *ngFor="let answer of poll.answers">
+					<div fxFlex="grow">
+						{{ answer.answer + ' - ' + answer.count }}
+					</div>
+					<div fxFlex>
+						<button *ngIf="!isFinished" mat-raised-button color="accent" (click)="vote(answer)">
+							<mat-icon>done</mat-icon>
+							Голосовать
+						</button>
+					</div>
 			</mat-list-item>
 		</mat-nav-list>
 	</mat-card-content>

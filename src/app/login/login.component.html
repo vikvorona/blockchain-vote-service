@@ -21,7 +21,7 @@
 <ng-template #loggedIn>
 	<div fxLayout fxLayoutAlign="center start" class="login-form">
 		<mat-card fxFlex="25%" fxFlex.lt-lg="50%" fxFlex.lt-sm="100%">
-			<div fxLayout="row" fxLayoutAlign="space-between center">
+			<div *ngIf="user" fxLayout="row" fxLayoutAlign="space-between center">
 				<div fxFlex>Добро пожаловать, {{user.username}}</div>
 				<button (click)="logout()" mat-raised-button color="primary">Выйти</button>
 			</div>

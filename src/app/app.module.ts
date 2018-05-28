@@ -2,20 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from './modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 
 
 import { AppComponent } from './app.component';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
-import { VotingListService } from './_services/voting-list.service';
 import { FormModule } from './form/form.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -28,6 +28,9 @@ import { VotingAnswerComponent } from './voting/voting-list/voting-item/voting-a
 import { PollService } from './_services/poll.service';
 import { HomeComponent } from './home/home.component';
 import { NotificationsService } from './_services/notifications.service';
+import { AdminComponent } from './admin/admin.component';
+import { UsersListComponent } from './admin/users/users-list/users-list.component';
+import { PollsListComponent } from './admin/polls/polls-list/polls-list.component';
 
 
 @NgModule({
@@ -43,25 +46,31 @@ import { NotificationsService } from './_services/notifications.service';
 		VotingItemComponent,
 		VotingFilterComponent,
 		VotingAnswerComponent,
-		HomeComponent
+		HomeComponent,
+		AdminComponent,
+		UsersListComponent,
+		PollsListComponent
 	],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
-		HttpModule,
+		HttpClientModule,
 		FormModule,
 		AppRoutingModule,
 		MaterialModule,
 		FlexLayoutModule,
-		NgbModule.forRoot()
+		NgProgressModule.forRoot({
+			color: '#ff4081'
+		}),
+		NgProgressHttpModule
 	],
 	providers: [
 		AuthenticationService,
-		VotingListService,
 		PollService,
-		NotificationsService
+		NotificationsService,
+		UserService
 	],
 	bootstrap: [AppComponent]
 })

@@ -1,38 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { environment } from '../../environments/environment';
 
 import { AuthenticationService } from './authentication.service';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { IPoll } from '../_models/poll.model';
 
 @Injectable()
 export class PollService {
-	headers = new Headers({ 'Authorization': 'Bearer ' + this.authenticationService.token });
-	options = new RequestOptions({ headers: this.headers });
+	headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authenticationService.token });
+	options = { headers: this.headers };
 
 	constructor(
-		private http: Http,
+		private http: HttpClient,
 		private authenticationService: AuthenticationService) {
 	}
 
-	createPoll(poll): Promise<any> {
-		return this.http.put('http://localhost:3000/api/createPoll', {
+	createPoll(poll): Observable<any> {
+		return this.http.put(environment.API_URL + '/createPoll', {
 			name: poll.name,
 			answers: poll.answers
-		}, this.options)
-				.toPromise();
+		}, this.options);
 	}
 
-	getPolls(): Promise<any> {
-		return this.http.get('http://localhost:3000/api/polls')
-				.toPromise().then((res: Response) => res.json());
+	getPolls(): Observable<IPoll[]> {
+		return this.http.get(environment.API_URL + '/polls')
+			.map((polls) => <IPoll[]>polls);
 	}
 
-	vote(name, answer): Promise<any> {
-		return this.http.post('http://localhost:3000/api/vote', {
-			name: name,
-			answer: answer
-		})
-		.toPromise().then((res: Response) => res.json());
+	getPoll(name): Observable<any> {
+		const poll = new WebSocket(environment.API_URL_WS + `/poll?name=${name}`);
+		const subj$ = new BehaviorSubject(null);
+		poll.onmessage = (event) => {
+			subj$.next(event.data);
+		};
+		return subj$.asObservable();
+	}
+
+	vote(name, answer): Observable<any> {
+		return this.http.post( environment.API_URL + '/vote', { name, answer }, this.options);
 	}
 }

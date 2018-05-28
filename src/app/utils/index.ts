@@ -1,12 +1,13 @@
 export class Poll {
-	name: string;
-	_answers: Array<Answer> = [];
-	status = 'active';
+	public name: string;
+	public status = 'active';
+
+	private _answers: Array<Answer> = [];
 
 	set answers(array: Array<any>) {
 		array.forEach((item) => {
-			this._answers.push(new Answer(item[0], item[1]))
-		})
+			this._answers.push(new Answer(item[0], item[1]));
+		});
 	}
 
 	get answers() {
@@ -22,11 +23,4 @@ export class Answer {
 		this.answer = answer;
 		this.count = +count;
 	}
-}
-
-export class User {
-	username = '';
-	firstname = '';
-	lastname = '';
-	password = '';
 }
