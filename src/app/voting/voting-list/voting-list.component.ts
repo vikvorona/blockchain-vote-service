@@ -1,5 +1,4 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { Voting, VotingListService } from '../../_services/voting-list.service';
 import { PollService } from '../../_services/poll.service';
 import { assignIn } from 'lodash';
 import { IPoll } from '../../_models/poll.model';
@@ -16,11 +15,8 @@ export class VotingListComponent implements OnInit {
 	public polls: Array<IPoll> = [];
 
 	ngOnInit() {
-		this.pollServise.getPolls().then((polls) => {
-			this.polls = polls.map((poll) => ({
-				name: poll.name,
-				status: poll.status
-			}));
+		this.pollServise.getPolls().subscribe((polls) => {
+			this.polls = polls;
 		});
 	}
 

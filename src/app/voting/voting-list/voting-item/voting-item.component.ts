@@ -3,6 +3,7 @@ import { Poll } from '../../../utils';
 import { PollService } from '../../../_services/poll.service';
 import { IPoll } from '../../../_models/poll.model';
 import { assignIn } from 'lodash';
+import { POLL_STATUSES, POLL_STATUSES_NAMES } from '../../../_constants/poll.constants';
 
 @Component({
 	selector: 'app-voting-item',
@@ -12,10 +13,8 @@ import { assignIn } from 'lodash';
 export class VotingItemComponent implements OnInit {
 	constructor(private pollService: PollService) { }
 
-	VOTING_STATUS = {
-		finished: 'Завершено',
-		active: 'В процессе'
-	};
+	POLL_STATUSES = POLL_STATUSES;
+	POLL_STATUSES_NAMES = POLL_STATUSES_NAMES;
 
 	@Input('voting') voting: IPoll;
 
@@ -25,8 +24,8 @@ export class VotingItemComponent implements OnInit {
 	public open = false;
 
 	ngOnInit() {
-		this.state = this.voting.status === 'finished' ? 'inactive' : 'active';
-		this.isFinished = this.voting.status === 'finished';
+		this.state = this.voting.status === this.POLL_STATUSES.finished ? 'inactive' : 'active';
+		this.isFinished = this.voting.status === this.POLL_STATUSES.finished;
 	}
 
 	getPoll() {
@@ -37,7 +36,7 @@ export class VotingItemComponent implements OnInit {
 					if (parsedPoll.address) {
 						this.poll = assignIn(new Poll(), parsedPoll);
 					} else {
-						this.poll.answers[parsedPoll.index].count = parsedPoll.answer[1];
+						this.poll.answers[parsedPoll.index].count = parsedPoll.count;
 					}
 				}
 			});
@@ -46,7 +45,7 @@ export class VotingItemComponent implements OnInit {
 	}
 
 	vote(answer: string) {
-		this.pollService.vote(this.voting.name, answer);
+		this.pollService.vote(this.voting.name, answer).subscribe();
 	}
 
 }

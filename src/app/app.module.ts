@@ -16,7 +16,6 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
-import { VotingListService } from './_services/voting-list.service';
 import { FormModule } from './form/form.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -31,6 +30,8 @@ import { HomeComponent } from './home/home.component';
 import { NotificationsService } from './_services/notifications.service';
 import { AdminComponent } from './admin/admin.component';
 import { MatProgressBar } from '@angular/material';
+import { UsersListComponent } from './admin/users/users-list/users-list.component';
+import { PollsListComponent } from './admin/polls/polls-list/polls-list.component';
 
 
 @NgModule({
@@ -48,7 +49,9 @@ import { MatProgressBar } from '@angular/material';
 		VotingFilterComponent,
 		VotingAnswerComponent,
 		HomeComponent,
-		AdminComponent
+		AdminComponent,
+		UsersListComponent,
+		PollsListComponent
 	],
 	imports: [
 		BrowserModule,
@@ -67,9 +70,9 @@ import { MatProgressBar } from '@angular/material';
 	],
 	providers: [
 		AuthenticationService,
-		VotingListService,
 		PollService,
-		NotificationsService
+		NotificationsService,
+		UserService
 	],
 	bootstrap: [AppComponent]
 })

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { User } from '../_models/users.model';
+import { IUser } from '../_models/users.model';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
 	loginForm: FormGroup;
 	isLoggedIn: boolean;
-	user: User;
+	user: IUser;
 
 	constructor(
 		private router: Router,

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/map';
 
 import { AuthenticationService } from './authentication.service';
-import { User } from '../_models/users.model';
+import { IUser } from '../_models/users.model';
 
 @Injectable()
 export class UserService {
@@ -16,32 +17,29 @@ export class UserService {
 		private authenticationService: AuthenticationService) {
 	}
 
-	createUser(user): Promise<any> {
-		return this.http.put('http://localhost:3000/api/createUser', {
+	createUser(user): Observable<any> {
+		return this.http.put(environment.API_URL + '/createUser', {
 			username: user.username,
 			password: user.password,
 			firstname: user.firstname,
 			lastname: user.lastname
-		}, this.options)
-				.toPromise();
+		}, this.options);
 	}
 
-	changePassword(user, password): Promise<any> {
-		return this.http.put('http://localhost:3000/api/changePassword', { username: user.username, password: password }, this.options)
-				.toPromise();
+	changePassword(user, password): Observable<any> {
+		return this.http.put(environment.API_URL + '/changePassword', { username: user.username, password: password }, this.options);
 	}
 
-	deleteUser(user): Promise<any> {
-		return this.http.delete('http://localhost:3000/api/deleteUser?username=' + user.username, this.options)
-				.toPromise();
+	deleteUser(user): Observable<any> {
+		return this.http.delete(environment.API_URL + '/deleteUser?username=' + user.username, this.options);
 	}
 
-	getUsers() {
-		return this.http.get('http://localhost:3000/api/users', this.options)
-				.toPromise();
+	getUsers(): Observable<IUser[]> {
+		return this.http.get(environment.API_URL + '/users', this.options)
+			.map((users) => <IUser[]>users);
 	}
 
-	getUser(): User {
+	getUser(): IUser {
 		return JSON.parse(localStorage.getItem('currentUser'));
 	}
 }

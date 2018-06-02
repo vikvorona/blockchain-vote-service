@@ -1,0 +1,29 @@
+<div *ngIf="isPollsExists">
+	<div class="mat-title">Модерирование голосований</div>
+	<mat-form-field>
+		<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Найти">
+	</mat-form-field>
+	<mat-table #table [dataSource]="dataSource" *ngIf="isFilteredData; else nodata" matSort>
+		<ng-container matColumnDef="name">
+			<mat-header-cell *matHeaderCellDef> Имя </mat-header-cell>
+			<mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+		</ng-container>
+		
+		<ng-container matColumnDef="startdate">
+			<mat-header-cell *matHeaderCellDef> Дата начала </mat-header-cell>
+			<mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
+		</ng-container>
+		
+		<ng-container matColumnDef="status">
+			<mat-header-cell *matHeaderCellDef> Статус </mat-header-cell>
+			<mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+		</ng-container>
+		
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+	</mat-table>
+	<mat-paginator *ngIf="isFilteredData" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+<ng-template #nodata>
+	Данные не найдены
+</ng-template>

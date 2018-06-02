@@ -1,0 +1,28 @@
+<div *ngIf="isUsersExists">
+	<div class="mat-title">Модерирование пользователей</div>
+	<mat-form-field>
+		<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Найти">
+	</mat-form-field>
+	<mat-table #table [dataSource]="dataSource" *ngIf="isFilteredData; else nodata">
+		<ng-container matColumnDef="username">
+			<mat-header-cell *matHeaderCellDef> Логин </mat-header-cell>
+			<mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+		</ng-container>
+		
+		<ng-container matColumnDef="firstname">
+			<mat-header-cell *matHeaderCellDef> Имя </mat-header-cell>
+			<mat-cell *matCellDef="let element"> {{element.firstname}} </mat-cell>
+		</ng-container>
+		
+		<ng-container matColumnDef="lastname">
+			<mat-header-cell *matHeaderCellDef> Фамилия </mat-header-cell>
+			<mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+		</ng-container>
+		
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+	</mat-table>
+</div>
+<ng-template #nodata>
+	Данные не найдены
+</ng-template>
