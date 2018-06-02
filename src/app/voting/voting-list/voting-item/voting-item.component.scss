@@ -1,6 +1,32 @@
 .voting-item {
 	margin-bottom: 1.5rem;
+	position: relative;
 	&:hover{
 		cursor: pointer;
 	}
+}
+
+.ll {
+	position: absolute;
+	right: 50px;
+	top: 30px;
+}
+
+.op {
+	position: relative;
+}
+
+.kk {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+}
+
+.o1 {
+	margin-right: 20px;
+	width: 100px;
+}
+
+.o2 {
+	margin-left: 20px;
 }

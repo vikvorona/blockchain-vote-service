@@ -29,6 +29,7 @@ import { PollService } from './_services/poll.service';
 import { HomeComponent } from './home/home.component';
 import { NotificationsService } from './_services/notifications.service';
 import { AdminComponent } from './admin/admin.component';
+import { MatProgressBar } from '@angular/material';
 import { UsersListComponent } from './admin/users/users-list/users-list.component';
 import { PollsListComponent } from './admin/polls/polls-list/polls-list.component';
 
@@ -36,6 +37,7 @@ import { PollsListComponent } from './admin/polls/polls-list/polls-list.componen
 @NgModule({
 	declarations: [
 		AppComponent,
+		MatProgressBar,
 		LoginComponent,
 		LoginComponent,
 		FooterComponent,

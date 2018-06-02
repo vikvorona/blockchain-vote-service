@@ -8,16 +8,20 @@
 	<mat-card-content>
 		{{ voting.description }}
 		<mat-nav-list *ngIf="poll" disableRipple="true">
-			<mat-list-item *ngFor="let answer of poll.answers">
-					<div fxFlex="grow">
-						{{ answer.answer + ' - ' + answer.count }}
-					</div>
-					<div fxFlex>
-						<button *ngIf="!isFinished" mat-raised-button color="accent" (click)="vote(answer)">
-							<mat-icon>done</mat-icon>
-							Голосовать
-						</button>
-					</div>
+			<mat-list-item *ngFor="let answer of poll.answers; let i = index" class="op">
+				<div class="kk">
+					{{answer.count}}
+				</div>
+				<div class="o1">
+					{{ answer.answer }}
+				</div>
+				<mat-progress-bar [value]="poll.getPercent(i)"></mat-progress-bar>
+				<div class="o2">
+					<!-- <button *ngIf="!isFinished" mat-raised-button color="accent" (click)="vote(answer)">
+						<mat-icon>done</mat-icon>
+						Голосовать
+					</button> -->
+				</div>
 			</mat-list-item>
 		</mat-nav-list>
 	</mat-card-content>
