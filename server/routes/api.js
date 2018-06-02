@@ -13,14 +13,14 @@ const lib = require('./lib');
 
 const web3API = require('web3');
 
-const web3 = new web3API(new web3API.providers.HttpProvider('http://localhost:8008'));
+//const web3 = new web3API(new web3API.providers.HttpProvider('http://localhost:8008'));
 
-web3.eth.defaultAccount = web3.eth.accounts[0];
+//web3.eth.defaultAccount = web3.eth.accounts[0];
 
-pollAbi = web3.eth.contract(lib.poll.abi);
+//pollAbi = web3.eth.contract(lib.poll.abi);
 
-accountAbi = web3.eth.contract(lib.account.abi);
-
+//accountAbi = web3.eth.contract(lib.account.abi);
+const web3 = null;
 mongoose.connect(uri, function(err) {
 	if (err) throw err;
 

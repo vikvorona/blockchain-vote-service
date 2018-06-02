@@ -13,6 +13,14 @@ export class Poll {
 	get answers() {
 		return this._answers;
 	}
+
+	getPercent(index) {
+		let lol = 0;
+		this.answers.forEach(ans => {
+			lol += ans.count;
+		});
+		return (this.answers[index].count / lol) * 100;
+	}
 }
 
 export class Answer {

@@ -30,11 +30,13 @@ import { PollService } from './_services/poll.service';
 import { HomeComponent } from './home/home.component';
 import { NotificationsService } from './_services/notifications.service';
 import { AdminComponent } from './admin/admin.component';
+import { MatProgressBar } from '@angular/material';
 
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		MatProgressBar,
 		LoginComponent,
 		LoginComponent,
 		FooterComponent,
